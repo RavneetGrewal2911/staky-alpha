@@ -1,0 +1,301 @@
+{% extends 'base.html' %}
+
+{% block title %}Audio Workshop{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <!-- Tab navigation -->
+            <ul class="nav nav-tabs mb-3" id="audioSourceTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="upload-tab" data-bs-toggle="tab" data-bs-target="#upload" 
+                            type="button" role="tab" aria-controls="upload" aria-selected="true">
+                        Upload Audio File
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="record-tab" data-bs-toggle="tab" data-bs-target="#record" 
+                            type="button" role="tab" aria-controls="record" aria-selected="false">
+                        Record Audio
+                    </button>
+                </li>
+            </ul>
+            
+            <!-- Tab content -->
+            <div class="tab-content" id="audioSourceTabContent">
+                <!-- Upload Tab -->
+                <div class="tab-pane fade show active" id="upload" role="tabpanel" aria-labelledby="upload-tab">
+                    <div class="card">
+                        <div class="card-header bg-primary text-white">
+                            <h2 class="mb-0">Upload Audio</h2>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text mb-4">Upload your audio file to get an accurate transcription and concise summary using AI technology.</p>
+                            
+                            <form action="{{ url_for('file_upload') }}" method="post" enctype="multipart/form-data" id="uploadForm">
+                                <div class="mb-3">
+                                    <label for="file" class="form-label">Audio File (MP3, WAV, M4A, etc.)</label>
+                                    <input type="file" class="form-control" id="file" name="file" accept="audio/*" required>
+                                    <div class="form-text">Maximum file size: 30MB</div>
+                                </div>
+                                
+                                <div class="d-grid">
+                                    <button type="submit" class="btn btn-primary" id="submitBtn">
+                                        Process Audio
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Record Tab -->
+                <div class="tab-pane fade" id="record" role="tabpanel" aria-labelledby="record-tab">
+                    <div class="card">
+                        <div class="card-header bg-primary text-white">
+                            <h2 class="mb-0">Record Audio</h2>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text mb-4">Record audio directly in your browser and have it transcribed and summarized instantly.</p>
+                            
+                            <div id="recorder-container">
+                                <!-- Recording controls -->
+                                <div class="row mb-4 align-items-center" id="recording-controls">
+                                    <div class="col text-center">
+                                        <button id="startRecording" class="btn btn-danger btn-lg rounded-circle">
+                                            <i class="bi bi-mic-fill"></i>
+                                        </button>
+                                        <p class="mt-2">Start Recording</p>
+                                    </div>
+                                    
+                                    <div class="col text-center">
+                                        <button id="stopRecording" class="btn btn-secondary btn-lg rounded-circle" disabled>
+                                            <i class="bi bi-stop-fill"></i>
+                                        </button>
+                                        <p class="mt-2">Stop Recording</p>
+                                    </div>
+                                </div>
+                                
+                                <!-- Recording status -->
+                                <div id="recording-status" class="mb-4 text-center" style="display: none;">
+                                    <div class="alert alert-danger">
+                                        <div class="d-flex align-items-center justify-content-center">
+                                            <span class="badge bg-danger p-2 me-2 pulse-recording"></span>
+                                            <span>Recording in progress... <span id="recording-time">00:00</span></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Audio preview -->
+                                <div id="audio-preview" class="mb-4" style="display: none;">
+                                    <div class="card bg-light">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Preview Recording</h5>
+                                            <audio id="recorded-audio" controls class="w-100 mb-3"></audio>
+                                            
+                                            <div class="d-grid gap-2">
+                                                <button id="use-recording" class="btn btn-success">
+                                                    Use This Recording
+                                                </button>
+                                                <button id="discard-recording" class="btn btn-outline-danger">
+                                                    Discard & Record Again
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Submit form for recorded audio -->
+                                <form id="recorded-audio-form" action="{{ url_for('file_upload') }}" method="post" enctype="multipart/form-data" style="display: none;">
+                                    <input type="hidden" name="recorded_audio" id="recorded-audio-data">
+                                    <input type="hidden" name="recorded_filename" value="browser-recording.wav">
+                                    
+                                    <div class="d-grid mt-3">
+                                        <button type="submit" class="btn btn-primary" id="submitRecordedBtn">
+                                            Process Recorded Audio
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mt-4">
+                <div class="card-header bg-secondary text-white">
+                    <h3 class="mb-0">How it Works</h3>
+                </div>
+                <div class="card-body">
+                    <ol class="list-group list-group-numbered">
+                        <li class="list-group-item">Upload an audio file or record directly in your browser</li>
+                        <li class="list-group-item">Our AI will process the audio and transcribe it</li>
+                        <li class="list-group-item">The AI will then analyze the transcription to create a concise summary</li>
+                        <li class="list-group-item">View and download both the transcription and summary</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<!-- Load Icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+
+<style>
+    /* Pulsing recording animation */
+    .pulse-recording {
+        animation: pulse 1.5s infinite;
+    }
+    
+    @keyframes pulse {
+        0% {
+            transform: scale(0.95);
+            opacity: 0.7;
+        }
+        50% {
+            transform: scale(1.05);
+            opacity: 1;
+        }
+        100% {
+            transform: scale(0.95);
+            opacity: 0.7;
+        }
+    }
+</style>
+
+<script>
+    // Upload form handler
+    document.getElementById('uploadForm').addEventListener('submit', function() {
+        document.getElementById('submitBtn').innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Processing...';
+        document.getElementById('submitBtn').disabled = true;
+    });
+    
+    // Audio recording functionality
+    document.addEventListener('DOMContentLoaded', function() {
+        // Elements
+        const startButton = document.getElementById('startRecording');
+        const stopButton = document.getElementById('stopRecording');
+        const recordingStatus = document.getElementById('recording-status');
+        const recordingTime = document.getElementById('recording-time');
+        const audioPreview = document.getElementById('audio-preview');
+        const audioPlayer = document.getElementById('recorded-audio');
+        const useRecordingButton = document.getElementById('use-recording');
+        const discardRecordingButton = document.getElementById('discard-recording');
+        const recordedForm = document.getElementById('recorded-audio-form');
+        const recordedDataInput = document.getElementById('recorded-audio-data');
+        const submitRecordedButton = document.getElementById('submitRecordedBtn');
+        
+        let mediaRecorder;
+        let audioChunks = [];
+        let recordingTimer;
+        let seconds = 0;
+        
+        // Update recording timer
+        function updateRecordingTime() {
+            seconds++;
+            const minutes = Math.floor(seconds / 60);
+            const remainingSeconds = seconds % 60;
+            recordingTime.textContent = `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
+        }
+        
+        // Start recording
+        startButton.addEventListener('click', async function() {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                
+                mediaRecorder = new MediaRecorder(stream);
+                audioChunks = [];
+                
+                mediaRecorder.addEventListener('dataavailable', event => {
+                    audioChunks.push(event.data);
+                });
+                
+                mediaRecorder.addEventListener('stop', () => {
+                    // Create blob from recorded chunks
+                    const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+                    const audioUrl = URL.createObjectURL(audioBlob);
+                    
+                    // Set audio source for preview
+                    audioPlayer.src = audioUrl;
+                    
+                    // Show audio preview
+                    recordingStatus.style.display = 'none';
+                    audioPreview.style.display = 'block';
+                    
+                    // Create a FileReader to convert the blob to base64
+                    const reader = new FileReader();
+                    reader.readAsDataURL(audioBlob);
+                    reader.onloadend = function() {
+                        // Get the base64 string (remove the data URL prefix)
+                        const base64Audio = reader.result.split(',')[1];
+                        recordedDataInput.value = base64Audio;
+                    };
+                    
+                    // Stop all tracks of the stream
+                    stream.getTracks().forEach(track => track.stop());
+                });
+                
+                // Start recording
+                mediaRecorder.start();
+                
+                // Update UI
+                startButton.disabled = true;
+                stopButton.disabled = false;
+                recordingStatus.style.display = 'block';
+                audioPreview.style.display = 'none';
+                recordedForm.style.display = 'none';
+                
+                // Start timer
+                seconds = 0;
+                recordingTime.textContent = '00:00';
+                recordingTimer = setInterval(updateRecordingTime, 1000);
+                
+            } catch (error) {
+                alert('Error accessing microphone: ' + error.message);
+                console.error('Error accessing microphone:', error);
+            }
+        });
+        
+        // Stop recording
+        stopButton.addEventListener('click', function() {
+            if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+                mediaRecorder.stop();
+                
+                // Update UI
+                startButton.disabled = false;
+                stopButton.disabled = true;
+                
+                // Stop timer
+                clearInterval(recordingTimer);
+            }
+        });
+        
+        // Use the recording
+        useRecordingButton.addEventListener('click', function() {
+            audioPreview.style.display = 'none';
+            recordedForm.style.display = 'block';
+        });
+        
+        // Discard the recording
+        discardRecordingButton.addEventListener('click', function() {
+            // Reset UI
+            audioPreview.style.display = 'none';
+            startButton.disabled = false;
+            stopButton.disabled = true;
+            recordingStatus.style.display = 'none';
+            audioChunks = [];
+            recordedDataInput.value = '';
+        });
+        
+        // Submit recorded audio form
+        recordedForm.addEventListener('submit', function() {
+            submitRecordedButton.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Processing...';
+            submitRecordedButton.disabled = true;
+        });
+    });
+</script>
+{% endblock %}

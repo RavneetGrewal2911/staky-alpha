@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+
+{% block title %}Transcription Result{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row">
+        <div class="col-12 mb-4">
+            <h1 class="mb-4">Transcription & Summary Result</h1>
+            
+            <div class="d-flex justify-content-end mb-3">
+                <a href="{{ url_for('workshop') }}" class="btn btn-outline-primary">
+                    <i class="bi bi-arrow-left"></i> Process Another File
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Summary Section -->
+        <div class="col-lg-6 mb-4">
+            <div class="card h-100">
+                <div class="card-header bg-primary text-white">
+                    <h2 class="mb-0">AI Summary</h2>
+                </div>
+                <div class="card-body">
+                    <div class="summary-content">
+                        {{ result|safe }}
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <button class="btn btn-sm btn-outline-secondary copy-btn" data-target="summary">
+                        Copy Summary
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Raw Transcription Section -->
+        <div class="col-lg-6 mb-4">
+            <div class="card h-100">
+                <div class="card-header bg-secondary text-white">
+                    <h2 class="mb-0">Full Transcription</h2>
+                </div>
+                <div class="card-body">
+                    <div class="transcription-content">
+                        <p>{{ raw_text }}</p>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <button class="btn btn-sm btn-outline-secondary copy-btn" data-target="transcription">
+                        Copy Transcription
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="container mb-5">
+    <div class="alert alert-info" role="alert">
+        <h4 class="alert-heading"><i class="bi bi-info-circle"></i> Important Notice</h4>
+        <p class="mb-0">
+            Please note that this app is still under development and may experience occasional interruptions. 
+            We are continuously making improvements. To help us manage traffic effectively:
+        </p>
+        <ul class="mb-0 mt-2">
+            <li>Please limit uploads to one summary per day</li>
+            <li>Keep file sizes under 30 MB</li>
+            <li>Currently, only English language is supported (additional languages coming soon)</li>
+        </ul>
+    </div>
+</div>
+
+
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Copy text functionality
+    document.addEventListener('DOMContentLoaded', function() {
+        const copyButtons = document.querySelectorAll('.copy-btn');
+        
+        copyButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const target = this.getAttribute('data-target');
+                let textToCopy;
+                
+                if (target === 'summary') {
+                    // Get text from summary section without HTML formatting
+                    textToCopy = document.querySelector('.summary-content').innerText;
+                } else {
+                    // Get text from transcription section
+                    textToCopy = document.querySelector('.transcription-content').innerText;
+                }
+                
+                // Copy to clipboard
+                navigator.clipboard.writeText(textToCopy).then(() => {
+                    // Change button text temporarily
+                    const originalText = this.innerHTML;
+                    this.innerHTML = 'Copied!';
+                    
+                    setTimeout(() => {
+                        this.innerHTML = originalText;
+                    }, 2000);
+                });
+            });
+        });
+    });
+</script>
+{% endblock %}

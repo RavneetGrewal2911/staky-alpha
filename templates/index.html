@@ -1,0 +1,242 @@
+{% extends 'base.html' %}
+
+{% block title %}Staky AI - Transform Audio to Text and Insights{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<div class="hero-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 text-center text-lg-start">
+                <h1 class="display-4 fw-bold mb-4">Transform Audio into <span class="text-primary">Actionable Insights</span></h1>
+                <p class="lead mb-4">Staky AI turns your spoken words into precise transcriptions and intelligent summaries, saving you hours of work.</p>
+                <div class="d-flex flex-column flex-sm-row gap-3 mb-4 justify-content-center justify-content-lg-start">
+                    <a href="{{ url_for('workshop') }}" class="btn btn-primary btn-lg px-4 py-2">Try For Free</a>
+                    
+                </div>
+                <div class="text-center text-lg-start text-secondary small mb-3">
+                    <span class="d-block d-sm-inline me-sm-3 mb-2 mb-sm-0">✓ No credit card required</span>
+                    <span class="d-block d-sm-inline">✓ Start in 30 seconds</span>
+                </div>
+            </div>
+            <div class="col-lg-6 d-none d-lg-block">
+                <div class="rounded bg-dark p-4 shadow-lg">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="me-2">
+                            <span class="badge bg-success p-2">Input</span>
+                        </div>
+                        <div class="small text-muted">audio_meeting.mp3</div>
+                    </div>
+                    <div class="mb-4 border border-secondary rounded p-3 small">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="me-2">
+                                <span class="badge bg-info p-2">Transcription</span>
+                            </div>
+                        </div>
+                        <p class="text-light">We're looking at Q1 results which exceeded our expectations. Revenue is up 12% year-over-year with new customers driving 30% of growth. The team has done an exceptional job.</p>
+                    </div>
+                    <div class="border border-secondary rounded p-3 small">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="me-2">
+                                <span class="badge bg-primary p-2">Summary</span>
+                            </div>
+                        </div>
+                        <p class="text-light fw-bold">Q1 results beat expectations with 12% YoY revenue growth. New customers accounted for 30% of growth. Team performance was exceptional.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Features Section -->
+<div class="container my-5 py-5">
+    <div class="text-center mb-5">
+        <h2 class="display-5 fw-bold mb-3">Why Choose <span class="text-primary">Staky AI</span>?</h2>
+        <p class="lead mx-auto" style="max-width: 700px;">Our AI-powered solution delivers exceptional results for professionals, teams, and organizations of all sizes.</p>
+    </div>
+    
+    <div class="row g-4 mb-5">
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body text-center p-4">
+                    <div class="feature-icon mb-3">
+                        <i class="bi bi-lightning-charge-fill"></i>⚡
+                    </div>
+                    <h3 class="card-title h4">Lightning Fast</h3>
+                    <p class="card-text">Process hours of audio in minutes. Get instant transcriptions and summaries without waiting.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body text-center p-4">
+                    <div class="feature-icon mb-3">
+                        <i class="bi bi-translate"></i>🌐
+                    </div>
+                    <h3 class="card-title h4">Accurate </h3>
+                    <p class="card-text">Accurate summaries powered by state-of-the-art models</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body text-center p-4">
+                    <div class="feature-icon mb-3">
+                        <i class="bi bi-shield-check"></i>🔒
+                    </div>
+                    <h3 class="card-title h4">Secure & Private</h3>
+                    <p class="card-text">Your data is processed with enterprise-grade security and never shared with third parties.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- How It Works Section -->
+<div class="container-fluid bg-dark py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="display-5 fw-bold mb-3">How It Works</h2>
+            <p class="lead mx-auto" style="max-width: 700px;">Three simple steps to transform your audio into actionable insights</p>
+        </div>
+        
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card h-100 border-0 bg-dark text-light">
+                    <div class="card-body text-center p-4">
+                        <div class="rounded-circle bg-primary d-flex align-items-center justify-content-center mx-auto mb-4" style="width: 80px; height: 80px;">
+                            <h3 class="mb-0">1</h3>
+                        </div>
+                        <h3 class="card-title h4">Upload or Record</h3>
+                        <p class="card-text">Upload audio files or record directly in your browser. Supports MP3, WAV, M4A and more.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 border-0 bg-dark text-light">
+                    <div class="card-body text-center p-4">
+                        <div class="rounded-circle bg-primary d-flex align-items-center justify-content-center mx-auto mb-4" style="width: 80px; height: 80px;">
+                            <h3 class="mb-0">2</h3>
+                        </div>
+                        <h3 class="card-title h4">AI Processing</h3>
+                        <p class="card-text">Our advanced AI powered by Groq transcribes and analyzes your audio with exceptional accuracy.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 border-0 bg-dark text-light">
+                    <div class="card-body text-center p-4">
+                        <div class="rounded-circle bg-primary d-flex align-items-center justify-content-center mx-auto mb-4" style="width: 80px; height: 80px;">
+                            <h3 class="mb-0">3</h3>
+                        </div>
+                        <h3 class="card-title h4">Review Results</h3>
+                        <p class="card-text">Get both the full transcription and a concise summary. Save, share, or download for later use.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Use Cases Section -->
+<div class="container my-5 py-5">
+    <div class="text-center mb-5">
+        <h2 class="display-5 fw-bold mb-3">Perfect For</h2>
+        <p class="lead mx-auto" style="max-width: 700px;">Staky AI helps professionals across industries save time and extract value from spoken content</p>
+    </div>
+    
+    <div class="row g-4">
+        <div class="col-lg-6">
+            <div class="card mb-4 h-100 border-0 shadow-sm">
+                <div class="card-body p-4">
+                    <h3 class="card-title h4 mb-3">
+                        <i class="bi bi-people-fill me-2"></i>👥 Meetings & Interviews
+                    </h3>
+                    <p class="card-text">Never miss important details in meetings again. Automatically transcribe and summarize discussions, decisions, and action items. Perfect for interviews, client calls, and team huddles.</p>
+                    <ul class="list-unstyled mb-0">
+                        <li class="mb-2">✓ Capture all discussion points without taking notes</li>
+                        <li class="mb-2">✓ Create shareable meeting summaries instantly</li>
+                        <li>✓ Document interview responses for easier evaluation</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="card mb-4 h-100 border-0 shadow-sm">
+                <div class="card-body p-4">
+                    <h3 class="card-title h4 mb-3">
+                        <i class="bi bi-mortarboard-fill me-2"></i>🎓 Lectures & Learning
+                    </h3>
+                    <p class="card-text">Transform hours of educational content into digestible notes. Ideal for students, researchers, and lifelong learners who want to extract key concepts from lectures and presentations.</p>
+                    <ul class="list-unstyled mb-0">
+                        <li class="mb-2">✓ Convert lectures into searchable text</li>
+                        <li class="mb-2">✓ Create study notes from recorded classes</li>
+                        <li>✓ Extract key concepts from educational videos</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="card mb-4 h-100 border-0 shadow-sm">
+                <div class="card-body p-4">
+                    <h3 class="card-title h4 mb-3">
+                        <i class="bi bi-mic-fill me-2"></i>🎙️ Podcasts & Media
+                    </h3>
+                    <p class="card-text">Create text versions of podcasts, videos, and other audio content to improve accessibility and SEO. Perfect for content creators and media producers.</p>
+                    <ul class="list-unstyled mb-0">
+                        <li class="mb-2">✓ Generate blog posts from podcast episodes</li>
+                        <li class="mb-2">✓ Create show notes with key timestamps</li>
+                        <li>✓ Improve content discoverability with text versions</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="card mb-4 h-100 border-0 shadow-sm">
+                <div class="card-body p-4">
+                    <h3 class="card-title h4 mb-3">
+                        <i class="bi bi-journal-text me-2"></i>📝 Research & Documentation
+                    </h3>
+                    <p class="card-text">Extract insights from research interviews, field recordings, and verbal notes. Perfect for researchers, journalists, and authors working with audio data.</p>
+                    <ul class="list-unstyled mb-0">
+                        <li class="mb-2">✓ Transcribe interviews for qualitative research</li>
+                        <li class="mb-2">✓ Convert field recordings into usable text</li>
+                        <li>✓ Document verbal notes and observations efficiently</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- CTA Section -->
+<div class="container-fluid py-5 mb-5">
+    <div class="container cta-section">
+        <div class="row align-items-center justify-content-between">
+            <div class="col-lg-7 mb-4 mb-lg-0">
+                <h2 class="display-6 fw-bold mb-3">Ready to transform your audio?</h2>
+                <p class="lead mb-0">Start transcribing and summarizing your audio content today.</p>
+            </div>
+            <div class="col-lg-5 text-lg-end">
+                <a href="{{ url_for('workshop') }}" class="btn btn-primary btn-lg px-4 me-md-2">Try For Free</a>
+                
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Add smooth scrolling to all links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+    });
+</script>
+{% endblock %}
