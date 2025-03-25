@@ -37,9 +37,9 @@ client = Groq(api_key=os.getenv('API_KEY'))
 # Initialize Flask app
 app = Flask(__name__)
 # Secret key for session management and CSRF protection
-app.secret_key = os.getenv('FLASK_SECRET_KEY', 'dev-secret-key')
+
 # 50MB limit for file uploads - adjust as needed for larger audio files
-app.config['MAX_CONTENT_LENGTH'] = 50 * 1024 * 1024  
+app.config['MAX_CONTENT_LENGTH'] = 30 * 1024 * 1024  
 
 # Create uploads folder if it doesn't exist
 # This folder is used for temporary storage of audio files
